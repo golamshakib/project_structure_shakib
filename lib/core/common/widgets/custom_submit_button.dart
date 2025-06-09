@@ -60,7 +60,7 @@ class CustomSubmitButton extends StatelessWidget {
                 Text(
                   text,
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.inter(
                     fontSize: getWidth(16),
                     fontWeight: FontWeight.w600,
                     color: textColor ?? AppColors.textWhite, // Use the provided text color or the default color

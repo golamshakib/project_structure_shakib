@@ -11,7 +11,7 @@ class CustomText extends StatelessWidget {
   final Color? color;
   final FontWeight? fontWeight;
   final int? maxLines;
-  final double? decorationthickness;
+  final double? decorationThickness;
   final TextOverflow? textOverflow;
   final TextDecoration? decoration;
   final Color? decorationColor;
@@ -21,7 +21,7 @@ class CustomText extends StatelessWidget {
       {super.key,
       required this.text,
       this.textAlign,
-        this.decorationthickness,
+        this.decorationThickness,
       this.maxLines,
       this.textOverflow,
       this.fontSize,
@@ -37,7 +37,7 @@ class CustomText extends StatelessWidget {
       textAlign: textAlign,
       style: GoogleFonts.inter(
           decoration: decoration,
-          decorationThickness: decorationthickness,
+          decorationThickness: decorationThickness,
           decorationColor: decorationColor ?? const Color(0xff2972FF),
           fontSize: fontSize ?? getWidth(14),
           color: color ?? AppColors.textPrimary,

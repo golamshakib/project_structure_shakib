@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ps_shakib/core/common/widgets/custom_text.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -7,7 +8,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(child:
-        Text('This is LoginScreen'),)
+        CustomText(text: 'This is LoginScreen'),)
     );
   }
 }

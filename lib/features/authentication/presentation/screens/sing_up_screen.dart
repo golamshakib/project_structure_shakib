@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/common/widgets/custom_text.dart';
+
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
@@ -7,7 +9,7 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(child:
-        Text('This is SignUp Screen'),)
+        CustomText(text: 'This is Signup Screen'),)
     );
   }
 }
