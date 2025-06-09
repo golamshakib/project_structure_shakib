@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ps_shakib/core/common/widgets/custom_dropdown.dart';
 import 'package:ps_shakib/core/common/widgets/custom_text.dart';
 import 'package:ps_shakib/core/utils/constants/app_sizes.dart';
 import 'package:ps_shakib/core/utils/constants/icon_path.dart';
@@ -16,22 +17,13 @@ class SplashScreen extends StatelessWidget {
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.all(getWidth(16)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CustomText(text: 'This is Splash Screen'),
-            CustomTextFormField(
-              controller: controller.emailController,
-              hintText: 'Type your Email',
-              containerColor: Colors.white,
-              // prefixIcon: Icon(Icons.email),
-              prefixIconPath: IconPath.email,
-              // suffixText: 'Email Suffix',
-              // prefixText: 'Hello Prefix',
-              suffixIconPath: IconPath.email,
-
-            ),
-          ],
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CustomText(text: 'This is Splash Screen'),
+            ],
+          ),
         ),
       ),
     );

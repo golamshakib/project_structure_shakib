@@ -11,6 +11,7 @@ class CustomTextFormField extends StatelessWidget {
   final ValueChanged<String>? onChanged;
   final Color? containerColor;
   final Color? containerBorderColor;
+  final double? containerBorderWidth;
   final int? maxLines;
   final bool readonly;
   final bool obscureText;
@@ -38,6 +39,7 @@ class CustomTextFormField extends StatelessWidget {
     this.onChanged,
     this.containerColor,
     this.containerBorderColor,
+    this.containerBorderWidth,
     this.maxLines,
     this.readonly = false,
     this.obscureText = false,
@@ -65,7 +67,7 @@ class CustomTextFormField extends StatelessWidget {
         color: containerColor ?? const Color(0xffF9FAFB),
         border: Border.all(
           color: containerBorderColor ?? const Color(0xffE0E0E0),
-          width: 0.5,
+          width: containerBorderWidth ?? 0.5,
         ),
         borderRadius: BorderRadius.circular(8),
       ),
