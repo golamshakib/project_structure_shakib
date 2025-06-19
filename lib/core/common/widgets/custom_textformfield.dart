@@ -17,7 +17,7 @@ class CustomTextFormField extends StatelessWidget {
   final bool obscureText;
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
-  final String? Function(String?)? validator;
+  final FormFieldValidator<String>? validator;
   final Widget? prefixIcon;
   final String? prefixIconPath;
   final String? prefixText;
