@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
           initialRoute: AppRoute.init,
           getPages: AppRoute.routes,
           initialBinding: ControllerBinder(),
-          themeMode: ThemeMode.system,
+          themeMode: ThemeMode.light,
           theme: _getLightTheme(),
           darkTheme: _getDarkTheme(),
           defaultTransition:
