@@ -25,16 +25,16 @@ class CustomSubmitButton extends StatelessWidget {
     this.padding,
     this.borderRadius,
     this.color, // Optional color parameter
-    this.textColor, // Optional text color parameter
+    this.textColor,
   });
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: color ?? AppColors.primary, // Use the provided color or the default color
+      color: color ?? AppColors.primary,
       borderRadius: borderRadius ?? BorderRadius.circular(4),
       child: InkWell(
-        splashColor: Colors.white.withOpacity(0.5),
+        splashColor: Colors.white.withValues(alpha: 0.5),
         borderRadius: borderRadius ?? BorderRadius.circular(12),
         onTap: onTap,
         child: Container(
@@ -63,19 +63,17 @@ class CustomSubmitButton extends StatelessWidget {
                   style: GoogleFonts.inter(
                     fontSize: getWidth(16),
                     fontWeight: FontWeight.w600,
-                    color: textColor ?? AppColors.textWhite, // Use the provided text color or the default color
+                    color:
+                        textColor ??
+                        AppColors
+                            .textWhite, // Use the provided text color or the default color
                   ),
                 ),
               ],
               // Display child if passed
-              if (child != null) ...[
-                child!,
-              ],
+              if (child != null) ...[child!],
               if (nextIcon != null) ...[
-                SizedBox(
-                  width: getWidth(25),
-                  child: nextIcon!,
-                ),
+                SizedBox(width: getWidth(25), child: nextIcon!),
               ],
             ],
           ),

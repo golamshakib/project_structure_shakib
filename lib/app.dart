@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
 import 'package:ps_shakib/routes/app_routes.dart';
-import 'core/bindings/controller_binder.dart';
 import 'core/utils/constants/app_sizer.dart';
 import 'core/utils/constants/app_sizes.dart';
 import 'core/utils/theme/theme.dart';
-
 
 class PlatformUtils {
   static bool get isIOS =>
@@ -24,20 +21,20 @@ class MyApp extends StatelessWidget {
     AppSizes().init(context);
     return Sizer(
       builder: (context, orientation, deviceType) {
-        return GetMaterialApp(
+        return MaterialApp.router(
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRoute.init,
-          getPages: AppRoute.routes,
-          initialBinding: ControllerBinder(),
+          routerConfig: AppRoute.routes,
           themeMode: ThemeMode.light,
           theme: _getLightTheme(),
           darkTheme: _getDarkTheme(),
-          defaultTransition:
-              PlatformUtils.isIOS ? Transition.cupertino : Transition.fade,
-          locale: Get.deviceLocale,
-          builder: (context, child) => PlatformUtils.isIOS
-              ? CupertinoTheme(data: const CupertinoThemeData(), child: child!)
-              : child!,
+          builder:
+              (context, child) =>
+                  PlatformUtils.isIOS
+                      ? CupertinoTheme(
+                        data: const CupertinoThemeData(),
+                        child: child!,
+                      )
+                      : child!,
         );
       },
     );

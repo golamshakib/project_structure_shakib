@@ -1,19 +1,8 @@
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
+import 'package:ps_shakib/features/authentication/presentation/screens/login_screen.dart';
+import 'package:ps_shakib/features/authentication/presentation/screens/sing_up_screen.dart';
+import 'package:ps_shakib/features/landing/presentation/screens/landing_screen.dart';
+import 'package:ps_shakib/features/splash_screen/controllers/splash_controller.dart';
+import 'package:ps_shakib/features/splash_screen/presentation/screens/splash_screen.dart';
 
-import '../features/authentication/presentation/screens/login_screen.dart';
-import '../features/authentication/presentation/screens/sing_up_screen.dart';
-import '../features/splash_screen/presentation/screens/splash_screen.dart';
-
-class AppRoute {
-  static String init = "/";
-  static String loginScreen = "/loginScreen";
-  static String signUpScreen = "/signUpScreen";
-
-
-
-  static List<GetPage> routes = [
-    GetPage(name: init, page: () => const SplashScreen()),
-    GetPage(name: loginScreen, page: () => const LoginScreen()),
-    GetPage(name: signUpScreen, page:() => const SignUpScreen())
-  ];
-}
+part 'app_routers.main.dart';

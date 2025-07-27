@@ -29,11 +29,16 @@ class CustomOutlineButton extends StatelessWidget {
       color: Colors.white,
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
-        splashColor: Colors.white.withOpacity(0.5),
+        splashColor: Colors.white.withValues(alpha: 0.5),
         onTap: onPressed,
         child: Container(
           width: containerWidth,
-          padding: containerPadding ?? EdgeInsets.symmetric(vertical: getHeight(17), horizontal: getWidth(16)),
+          padding:
+              containerPadding ??
+              EdgeInsets.symmetric(
+                vertical: getHeight(17),
+                horizontal: getWidth(16),
+              ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4),
             border: Border.all(color: borderColor ?? AppColors.primary),
@@ -57,7 +62,7 @@ class CustomOutlineButton extends StatelessWidget {
                 fontSize: getWidth(16),
                 fontWeight: FontWeight.w600,
                 color: AppColors.primary,
-              )
+              ),
             ],
           ),
         ),
