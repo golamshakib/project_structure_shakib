@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ps_shakib/core/common/widgets/custom_dropdown.dart';
 import 'package:ps_shakib/core/common/widgets/custom_text.dart';
 import 'package:ps_shakib/core/utils/constants/app_sizes.dart';
-import 'package:ps_shakib/core/utils/constants/icon_path.dart';
-
-import '../../../../core/common/widgets/custom_textformfield.dart';
 import '../../../authentication/controllers/login_controller.dart';
 
 class SplashScreen extends StatelessWidget {
