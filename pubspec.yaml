@@ -42,6 +42,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   # State Management
   get: ^4.6.6
+  #secret_protection
+  flutter_dotenv: ^5.2.1
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +69,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - .env
     - assets/images/
     - assets/icons/
     - assets/logos/
