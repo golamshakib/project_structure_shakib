@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import '../models/response_data.dart';
 import '../utils/logging/logger.dart';
-import 'Auth_service.dart';
+import 'auth_service.dart';
 
 class NetworkCaller {
   final int timeoutDuration = 10;
