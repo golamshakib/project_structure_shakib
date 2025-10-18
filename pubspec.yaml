@@ -32,18 +32,24 @@ dependencies:
     sdk: flutter
 
   # Utility Packages
-  http: ^1.1.0
-  intl: ^0.18.1
-  logger: ^2.0.1
-  url_launcher: ^6.1.12
-  google_fonts: ^6.2.1
-  shared_preferences: ^2.3.2
+  http: ^1.5.0
+  intl: ^0.20.2
+  logger: ^2.6.2
+  url_launcher: ^6.3.2
+  # Fonts
+  google_fonts: ^6.3.2
+  # Local Storage
+  shared_preferences: ^2.5.3
   # Icons
   cupertino_icons: ^1.0.8
   # State Management
-  get: ^4.6.6
-  #secret_protection
-  flutter_dotenv: ^5.2.1
+  get: ^4.7.2
+  # Secret_protection
+  flutter_dotenv: ^6.0.0
+  # Notification Services
+  firebase_core: ^4.0.0
+  firebase_messaging: ^16.0.0
+  flutter_local_notifications: ^19.4.0
 
 dev_dependencies:
   flutter_test:
