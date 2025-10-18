@@ -66,6 +66,30 @@ class NetworkCaller {
     }
   }
 
+  Future<ResponseData> patchRequest(
+      String endpoint, {
+        Map<String, dynamic>? body,
+        String? token,
+      }) async {
+    AppLoggerHelper.info('PATCH Request: $endpoint');
+    AppLoggerHelper.info('Request Body: ${jsonEncode(body)}');
+
+    try {
+      final Response response = await patch(
+        Uri.parse(endpoint),
+        headers: {
+          'Authorization': token ?? "Bearer ${AuthService.token.toString()}",
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(body),
+      ).timeout(Duration(seconds: timeoutDuration));
+
+      return _handleResponse(response);
+    } catch (e) {
+      return _handleError(e);
+    }
+  }
+
   Future<ResponseData> deleteRequest(String endpoint, String? token) async {
     AppLoggerHelper.info('DELETE Request: $endpoint');
     try {
@@ -102,7 +126,7 @@ class NetworkCaller {
           return ResponseData(
             isSuccess: true,
             statusCode: response.statusCode,
-            responseData: null,
+            responseData: decodedResponse,
             errorMessage: '',
           );
         case 400:
@@ -111,7 +135,7 @@ class NetworkCaller {
             statusCode: response.statusCode,
             errorMessage: decodedResponse['error'] ??
                 'There was an issue with your request. Please try again.',
-            responseData: null,
+            responseData: decodedResponse,
           );
         case 401:
           await AuthService.logoutUser();
@@ -119,28 +143,28 @@ class NetworkCaller {
             isSuccess: false,
             statusCode: response.statusCode,
             errorMessage: 'You are not authorized. Please log in to continue.',
-            responseData: null,
+            responseData: decodedResponse,
           );
         case 403:
           return ResponseData(
             isSuccess: false,
             statusCode: response.statusCode,
             errorMessage: 'You do not have permission to access this resource.',
-            responseData: null,
+            responseData: decodedResponse,
           );
         case 404:
           return ResponseData(
             isSuccess: false,
             statusCode: response.statusCode,
             errorMessage: 'The resource you are looking for was not found.',
-            responseData: null,
+            responseData: decodedResponse,
           );
         case 500:
           return ResponseData(
             isSuccess: false,
             statusCode: response.statusCode,
             errorMessage: 'Internal server error. Please try again later.',
-            responseData: null,
+            responseData: decodedResponse,
           );
         default:
           return ResponseData(
@@ -148,15 +172,16 @@ class NetworkCaller {
             statusCode: response.statusCode,
             errorMessage: decodedResponse['error'] ??
                 'Something went wrong. Please try again.',
-            responseData: null,
+            responseData: decodedResponse,
           );
       }
     } catch (e) {
+      final decodedResponse = jsonDecode(response.body);
       return ResponseData(
         isSuccess: false,
         statusCode: response.statusCode,
-        errorMessage: 'Failed to process the response. Please try again later.',
-        responseData: null,
+        errorMessage: decodedResponse['error'] ?? 'Failed to process the response. Please try again later.',
+        responseData: decodedResponse,
       );
     }
   }
