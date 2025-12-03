@@ -17,7 +17,6 @@ class CustomTextFormField extends StatelessWidget {
   final bool obscureText;
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
-  final FormFieldValidator<String>? validator;
   final Widget? prefixIcon;
   final String? prefixIconPath;
   final String? prefixText;
@@ -30,6 +29,8 @@ class CustomTextFormField extends StatelessWidget {
   final InputBorder? enabledBorder;
   final InputBorder? focusedBorder;
   final InputBorder? focusedErrorBorder;
+  final bool showError; // Added to show error border
+  final Color? errorBorderColor; // Added for error border color
 
   const CustomTextFormField({
     super.key,
@@ -43,7 +44,6 @@ class CustomTextFormField extends StatelessWidget {
     this.maxLines,
     this.readonly = false,
     this.obscureText = false,
-    this.validator,
     this.keyboardType,
     this.inputFormatters,
     this.prefixIcon,
@@ -58,18 +58,20 @@ class CustomTextFormField extends StatelessWidget {
     this.enabledBorder,
     this.focusedBorder,
     this.focusedErrorBorder,
+    this.showError = false,
+    this.errorBorderColor,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: containerColor ?? const Color(0xffF9FAFB),
+        color: containerColor ?? const Color(0xffE9E9E9),
         border: Border.all(
-          color: containerBorderColor ?? const Color(0xffE0E0E0),
+          color: showError ? (errorBorderColor ?? Colors.red) : (containerBorderColor ?? const Color(0xffE9E9E9)),
           width: containerBorderWidth ?? 0.5,
         ),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(50),
       ),
       child: TextFormField(
         controller: controller,
@@ -78,8 +80,9 @@ class CustomTextFormField extends StatelessWidget {
         maxLines: maxLines ?? 1,
         keyboardType: keyboardType,
         inputFormatters: inputFormatters,
-        validator: validator,
         autovalidateMode: AutovalidateMode.onUserInteraction,
+        onChanged: onChanged,
+
         style: GoogleFonts.inter(
           fontSize: getWidth(16),
           fontWeight: FontWeight.w400,
@@ -88,39 +91,39 @@ class CustomTextFormField extends StatelessWidget {
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle:
-              hintTextStyle ??
+          hintTextStyle ??
               GoogleFonts.inter(
                 fontSize: getWidth(15),
                 fontWeight: FontWeight.w400,
-                color: AppColors.textSecondary,
+                color: AppColors.hintText,
               ),
           prefixText: prefixText != null ? '$prefixText  ' : null,
           prefixStyle:
-              prefixTextStyle ??
+          prefixTextStyle ??
               GoogleFonts.inter(
                 fontSize: getWidth(15),
                 fontWeight: FontWeight.w400,
                 color: AppColors.textSecondary,
               ),
           prefixIcon:
-              prefixIcon ??
+          prefixIcon ??
               (prefixIconPath != null
                   ? Padding(
-                    padding: EdgeInsets.symmetric(horizontal: getWidth(11)),
-                    child: Image.asset(prefixIconPath!, width: getWidth(26)),
-                  )
+                padding: EdgeInsets.symmetric(horizontal: getWidth(12)),
+                child: Image.asset(prefixIconPath!, width: getWidth(26)),
+              )
                   : null),
           suffixIcon:
-              suffixIcon ??
+          suffixIcon ??
               (suffixIconPath != null
                   ? Padding(
-                    padding: EdgeInsets.symmetric(horizontal: getWidth(11)),
-                    child: Image.asset(suffixIconPath!, width: getWidth(26)),
-                  )
+                padding: EdgeInsets.symmetric(horizontal: getWidth(12)),
+                child: Image.asset(suffixIconPath!, width: getWidth(26)),
+              )
                   : null),
           suffixText: suffixText != null ? '  $suffixText' : null,
           suffixStyle:
-              suffixTextStyle ??
+          suffixTextStyle ??
               GoogleFonts.inter(
                 fontSize: getWidth(15),
                 fontWeight: FontWeight.w400,
