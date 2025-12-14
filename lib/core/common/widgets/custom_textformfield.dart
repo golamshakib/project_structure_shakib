@@ -29,11 +29,16 @@ class CustomTextFormField extends StatelessWidget {
   final InputBorder? enabledBorder;
   final InputBorder? focusedBorder;
   final InputBorder? focusedErrorBorder;
-  final bool showError; // Added to show error border
-  final Color? errorBorderColor; // Added for error border color
+  final bool showError;
+  final Color? errorBorderColor;
+  final double? borderRedius;
+  final String? Function(String?)? validation;
+  final VoidCallback? onClick;
 
   const CustomTextFormField({
     super.key,
+    this.onClick,
+    this.validation,
     required this.controller,
     required this.hintText,
     this.hintTextStyle,
@@ -60,82 +65,119 @@ class CustomTextFormField extends StatelessWidget {
     this.focusedErrorBorder,
     this.showError = false,
     this.errorBorderColor,
+    this.borderRedius,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: containerColor ?? const Color(0xffE9E9E9),
-        border: Border.all(
-          color: showError ? (errorBorderColor ?? Colors.red) : (containerBorderColor ?? const Color(0xffE9E9E9)),
-          width: containerBorderWidth ?? 0.5,
-        ),
-        borderRadius: BorderRadius.circular(50),
-      ),
-      child: TextFormField(
-        controller: controller,
-        readOnly: readonly,
-        obscureText: obscureText,
-        maxLines: maxLines ?? 1,
-        keyboardType: keyboardType,
-        inputFormatters: inputFormatters,
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        onChanged: onChanged,
+    return TextFormField(
+      onTap: onClick,
+      controller: controller,
+      readOnly: readonly,
+      obscureText: obscureText,
+      maxLines: maxLines ?? 1,
+      keyboardType: keyboardType,
+      inputFormatters: inputFormatters,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      onChanged: onChanged,
+      validator: validation,
 
-        style: GoogleFonts.inter(
-          fontSize: getWidth(16),
-          fontWeight: FontWeight.w400,
-          color: AppColors.textPrimary,
+      style: GoogleFonts.inter(
+        fontSize: getWidth(16),
+        fontWeight: FontWeight.w400,
+        color: AppColors.textPrimary,
+      ),
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: containerColor ?? const Color(0xffE9E9E9),
+        contentPadding: EdgeInsets.symmetric(vertical: getHeight(12), horizontal: getWidth(12)),
+        hintText: hintText,
+        hintStyle:
+        hintTextStyle ??
+            GoogleFonts.inter(
+              fontSize: getWidth(15),
+              fontWeight: FontWeight.w400,
+              color: AppColors.hintText,
+            ),
+        prefixText: prefixText != null ? '$prefixText  ' : null,
+        prefixStyle:
+        prefixTextStyle ??
+            GoogleFonts.inter(
+              fontSize: getWidth(15),
+              fontWeight: FontWeight.w400,
+              color: AppColors.textSecondary,
+            ),
+        prefixIcon:
+        prefixIcon ??
+            (prefixIconPath != null
+                ? Padding(
+              padding: EdgeInsets.symmetric(horizontal: getWidth(12)),
+              child: Image.asset(prefixIconPath!, width: getWidth(26)),
+            )
+                : null),
+        suffixText: suffixText != null ? '  $suffixText' : null,
+        suffixStyle:
+        suffixTextStyle ??
+            GoogleFonts.inter(
+              fontSize: getWidth(15),
+              fontWeight: FontWeight.w400,
+              color: AppColors.textSecondary,
+            ),
+        suffixIcon:
+        suffixIcon ??
+            (suffixIconPath != null
+                ? Padding(
+              padding: EdgeInsets.symmetric(horizontal: getWidth(12)),
+              child: Image.asset(suffixIconPath!, width: getWidth(26)),
+            )
+                : null),
+        border:
+        border ??
+            OutlineInputBorder(
+              borderRadius: BorderRadius.circular(borderRedius ?? 50),
+              borderSide: BorderSide(
+                color: containerBorderColor ?? AppColors.textFormFieldBorder,
+                width: containerBorderWidth ?? 1,
+              ),
+            ),
+        enabledBorder:
+        enabledBorder ??
+            OutlineInputBorder(
+              borderRadius: BorderRadius.circular(borderRedius ?? 50),
+              borderSide: BorderSide(
+                color: containerBorderColor ?? AppColors.textFormFieldBorder,
+                width: containerBorderWidth ?? 1,
+              ),
+            ),
+        focusedBorder:
+        focusedBorder ??
+            OutlineInputBorder(
+              borderRadius: BorderRadius.circular(borderRedius ?? 50),
+              borderSide: BorderSide(
+                color: Colors.green,
+                width: containerBorderWidth ?? 1.2,
+              ),
+            ),
+        focusedErrorBorder:
+        focusedErrorBorder ??
+            OutlineInputBorder(
+              borderRadius: BorderRadius.circular(borderRedius ?? 50),
+              borderSide: BorderSide(
+                color: AppColors.error,
+                width: containerBorderWidth ?? 1.2,
+              ),
+            ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(borderRedius ?? 50),
+          borderSide: BorderSide(
+            color: AppColors.error,
+            width: containerBorderWidth ?? 1,
+          ),
         ),
-        decoration: InputDecoration(
-          hintText: hintText,
-          hintStyle:
-          hintTextStyle ??
-              GoogleFonts.inter(
-                fontSize: getWidth(15),
-                fontWeight: FontWeight.w400,
-                color: AppColors.hintText,
-              ),
-          prefixText: prefixText != null ? '$prefixText  ' : null,
-          prefixStyle:
-          prefixTextStyle ??
-              GoogleFonts.inter(
-                fontSize: getWidth(15),
-                fontWeight: FontWeight.w400,
-                color: AppColors.textSecondary,
-              ),
-          prefixIcon:
-          prefixIcon ??
-              (prefixIconPath != null
-                  ? Padding(
-                padding: EdgeInsets.symmetric(horizontal: getWidth(12)),
-                child: Image.asset(prefixIconPath!, width: getWidth(26)),
-              )
-                  : null),
-          suffixIcon:
-          suffixIcon ??
-              (suffixIconPath != null
-                  ? Padding(
-                padding: EdgeInsets.symmetric(horizontal: getWidth(12)),
-                child: Image.asset(suffixIconPath!, width: getWidth(26)),
-              )
-                  : null),
-          suffixText: suffixText != null ? '  $suffixText' : null,
-          suffixStyle:
-          suffixTextStyle ??
-              GoogleFonts.inter(
-                fontSize: getWidth(15),
-                fontWeight: FontWeight.w400,
-                color: AppColors.textSecondary,
-              ),
-          border: border ?? InputBorder.none,
-          focusedBorder: focusedBorder ?? InputBorder.none,
-          focusedErrorBorder: focusedErrorBorder ?? InputBorder.none,
-          enabledBorder: enabledBorder ?? InputBorder.none,
-          errorBorder: InputBorder.none,
-          disabledBorder: InputBorder.none,
-          contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+        errorStyle: GoogleFonts.inter(
+          fontSize: getWidth(14),
+          fontWeight: FontWeight.w400,
+          color: AppColors.error,
         ),
       ),
     );

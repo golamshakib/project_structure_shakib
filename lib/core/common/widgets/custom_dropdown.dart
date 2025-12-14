@@ -4,7 +4,6 @@ import '../../utils/constants/app_sizes.dart';
 import 'custom_text.dart';
 import '../../utils/constants/app_colors.dart';
 
-
 class CustomDropdownField extends StatelessWidget {
   final String? label;
   final String hintText;
@@ -13,6 +12,7 @@ class CustomDropdownField extends StatelessWidget {
   final String selectedValue;
   final Color? borderColor;
   final ValueChanged<String> onChanged;
+  final double? borderRedius;
 
   const CustomDropdownField({
     super.key,
@@ -23,6 +23,7 @@ class CustomDropdownField extends StatelessWidget {
     required this.selectedValue,
     this.borderColor = const Color(0xffB8B8B8),
     required this.onChanged,
+    this.borderRedius,
   });
 
   @override
@@ -59,14 +60,15 @@ class CustomDropdownField extends StatelessWidget {
           // height: getHeight(48),
           padding: EdgeInsets.symmetric(
             horizontal: getWidth(18),
-            vertical: getHeight(15),
+            vertical: getHeight(18),
           ),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: BorderRadius.circular(borderRedius ?? 4),
             border: Border.all(
               color: AppColors.textFormFieldBorder,
               width: getWidth(1),
             ),
+            color: AppColors.textWhite,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
