@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'app.dart';
+import 'core/services/auth_service.dart';
 import 'core/services/firebase_messaging_services.dart';
 import 'core/services/local_notification_service.dart';
 import 'core/utils/logging/loggerformain.dart';
@@ -15,6 +16,7 @@ void main() async {
   /// Load environment variables
   await dotenv.load(fileName: '.env');  // Must need to initialize before Firebase
 
+  await AuthService.init();
   // /// Firebase Initialization
   // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   // /// Initialize Local Notification Service
