@@ -8,7 +8,7 @@ class CustomText extends StatelessWidget {
   final String text;
   final TextAlign? textAlign;
   final double? fontSize;
-  final Color? color;
+  final Color? textColor;
   final FontWeight? fontWeight;
   final int? maxLines;
   final double? decorationThickness;
@@ -25,7 +25,7 @@ class CustomText extends StatelessWidget {
       this.maxLines,
       this.textOverflow,
       this.fontSize,
-      this.color,
+      this.textColor,
       this.fontWeight,
       this.decoration,
       this.decorationColor});
@@ -40,7 +40,7 @@ class CustomText extends StatelessWidget {
           decorationThickness: decorationThickness,
           decorationColor: decorationColor ?? const Color(0xff2972FF),
           fontSize: fontSize ?? getWidth(14),
-          color: color ?? AppColors.textPrimary,
+          color: textColor ?? AppColors.textPrimary,
           fontWeight: fontWeight ?? FontWeight.w600),
       overflow: textOverflow,
       maxLines: maxLines,

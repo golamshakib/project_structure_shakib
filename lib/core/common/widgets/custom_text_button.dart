@@ -44,7 +44,7 @@ class _AppTextButtonState extends State<CustomTextButton> {
       onTapUp: _onTapUp,
       child: CustomText(
         text: widget.text,
-        color: color,
+        textColor: color,
         fontWeight: widget.fontWeight ?? FontWeight.w400,
         fontSize: size,
         maxLines: 1,
