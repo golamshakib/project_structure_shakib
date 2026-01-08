@@ -79,7 +79,7 @@ class CustomDropdownField extends StatelessWidget {
                 fontWeight: FontWeight.w500,
                 fontSize: getWidth(14),
                 text: selectedValue.isEmpty ? hintText : selectedValue,
-                color: selectedValue.isEmpty
+                textColor: selectedValue.isEmpty
                     ? AppColors.textPrimary
                     : AppColors.textPrimary,
               ),

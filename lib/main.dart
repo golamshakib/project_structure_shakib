@@ -28,7 +28,6 @@ void main() async {
   //   localNotificationService: localNotificationService,
   // );
 
-
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
         (value) {
       Logger.init(kReleaseMode ? LogMode.live : LogMode.debug);
