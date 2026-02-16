@@ -43,7 +43,7 @@ dependencies:
   # Icons
   cupertino_icons: ^1.0.8
   # State Management
-  get: ^4.7.2
+  get: ^4.7.3
   # Secret_protection
   flutter_dotenv: ^6.0.0
   # Notification Services
