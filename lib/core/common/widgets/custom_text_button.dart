@@ -9,13 +9,13 @@ class CustomTextButton extends StatefulWidget {
     required this.text,
     required this.onTap,
     this.textColor,
-    this.textSize,
+    this.fontSize,
     this.fontWeight,
   });
 
   final String text;
   final Color? textColor;
-  final double? textSize;
+  final double? fontSize;
   final Function onTap;
   final FontWeight? fontWeight;
 
@@ -30,8 +30,8 @@ class _AppTextButtonState extends State<CustomTextButton> {
   @override
   void initState() {
     super.initState();
-    color = widget.textColor ?? AppColors.textPrimary;
-    size = widget.textSize ?? getWidth(14);
+    color = widget.textColor ?? AppColors.primary;
+    size = widget.fontSize ?? getWidth(14);
   }
 
   @override
@@ -63,7 +63,7 @@ class _AppTextButtonState extends State<CustomTextButton> {
     Future.delayed(const Duration(milliseconds: 150)).then((value) {
       setState(() {
         color = widget.textColor ?? AppColors.textPrimary;
-        size = widget.textSize ?? getWidth(14);
+        size = widget.fontSize ?? getWidth(14);
       });
     });
   }
