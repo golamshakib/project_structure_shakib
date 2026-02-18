@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -14,6 +16,8 @@ class CustomSubmitButton extends StatelessWidget {
   final BorderRadius? borderRadius;
   final Color? color; // Added color parameter (button color)
   final Color? textColor; // Added textColor parameter (text color)
+  final double? fontSize; // Added fontSize parameter (font size)
+  final FontWeight? fontWeight; // Added fontWeight parameter (font weight)
 
   const CustomSubmitButton({
     super.key,
@@ -26,13 +30,15 @@ class CustomSubmitButton extends StatelessWidget {
     this.borderRadius,
     this.color, // Optional color parameter
     this.textColor, // Optional text color parameter
+    this.fontSize,
+    this.fontWeight,
   });
 
   @override
   Widget build(BuildContext context) {
     return Material(
       color: color ?? AppColors.primary, // Use the provided color or the default color
-      borderRadius: borderRadius ?? BorderRadius.circular(4),
+      borderRadius: borderRadius ?? BorderRadius.circular(12),
       child: InkWell(
         splashColor: Colors.white.withOpacity(0.5),
         borderRadius: borderRadius ?? BorderRadius.circular(12),
@@ -61,8 +67,8 @@ class CustomSubmitButton extends StatelessWidget {
                   text,
                   textAlign: TextAlign.center,
                   style: GoogleFonts.inter(
-                    fontSize: getWidth(16),
-                    fontWeight: FontWeight.w600,
+                    fontSize: fontSize ?? getWidth(16),
+                    fontWeight: fontWeight ?? FontWeight.w600,
                     color: textColor ?? AppColors.textWhite, // Use the provided text color or the default color
                   ),
                 ),
