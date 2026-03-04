@@ -2,10 +2,7 @@
 
 import 'dart:developer';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:simple_chatting_app/routes/app_routes.dart';
-
 import '../../routes/app_routes.dart';
 
 class AuthService {
