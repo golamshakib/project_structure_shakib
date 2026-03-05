@@ -28,12 +28,14 @@ class AppHelperFunctions{
   );
  }
 
+
  static void navigateToScreen(BuildContext context, Widget screen) {
   Navigator.push(
    context,
    MaterialPageRoute(builder: (_) => screen),
   );
  }
+
 
  static String truncateText(String text, int maxLength) {
   if (text.length <= maxLength) {
@@ -77,4 +79,15 @@ class AppHelperFunctions{
   return wrappedList;
  }
 
+}
+
+extension EnumToText on String {
+ String enumToText() {
+  // Replace underscores with spaces, convert to lowercase, then capitalize each word
+  return split('_')
+      .map((word) => word.isEmpty
+      ? word
+      : word[0].toUpperCase() + word.substring(1).toLowerCase())
+      .join(' ');
+ }
 }
