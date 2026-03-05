@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:mime/mime.dart';
 import '../models/response_data.dart';
 import '../utils/logging/logger.dart';
 import 'auth_service.dart';
@@ -41,6 +43,55 @@ class NetworkCaller {
         body: jsonEncode(body),
       ).timeout(Duration(seconds: timeoutDuration));
       return _handleResponse(response);
+    } catch (e) {
+      return _handleError(e);
+    }
+  }
+
+  Future<ResponseData> multiFormApiCall({
+    required apiUrl,
+    Map<String, dynamic>? requestBody,
+    String? profileImagePath,
+    required String method,
+    String? profileImageFiledName,
+    int timeoutDuration = 40,
+  }) async {
+    try {
+      var request = http.MultipartRequest(method.toUpperCase(), Uri.parse(apiUrl));
+
+      /// Assign Body
+      if (requestBody != null) {
+        request.fields['data'] = jsonEncode(requestBody);
+        AppLoggerHelper.info("body for server is: ${requestBody.toString()}");
+      }
+
+      request.headers['Authorization'] = 'Bearer ${AuthService.token}';
+      request.headers['Accept'] = 'application/json';
+
+      /// Submitting one image
+      if (profileImagePath != null && profileImagePath.isNotEmpty) {
+        final mimeType = lookupMimeType(profileImagePath) ?? "image/jpeg";
+        final splitMime = mimeType.split('/');
+
+        request.files.add(
+          await http.MultipartFile.fromPath(
+            profileImageFiledName ?? "profileImage",
+            profileImagePath,
+            contentType: MediaType(splitMime[0], splitMime[1]),
+          ),
+        );
+      }
+
+      /// sending request with timeout
+      final response = await request
+          .send()
+          .timeout(Duration(seconds: timeoutDuration));
+
+      var streamedResponse = await http.Response.fromStream(response);
+      return _handleResponse(streamedResponse);
+
+    } on TimeoutException {
+      return _handleError("Request timeout after $timeoutDuration seconds");
     } catch (e) {
       return _handleError(e);
     }
@@ -195,7 +246,7 @@ class NetworkCaller {
         isSuccess: false,
         statusCode: 408,
         errorMessage:
-            'Request timed out. Please check your internet connection and try again.',
+        'Request timed out. Please check your internet connection and try again.',
         responseData: null,
       );
     } else if (error is http.ClientException) {
@@ -203,7 +254,7 @@ class NetworkCaller {
         isSuccess: false,
         statusCode: 500,
         errorMessage:
-            'Network error occurred. Please check your connection and try again.',
+        'Network error occurred. Please check your connection and try again.',
         responseData: null,
       );
     } else {

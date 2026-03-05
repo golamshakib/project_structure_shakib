@@ -33,6 +33,8 @@ dependencies:
 
   # Utility Packages
   http: ^1.5.0
+  http_parser: ^4.1.2
+  mime: ^2.0.0
   intl: ^0.20.2
   logger: ^2.6.2
   url_launcher: ^6.3.2
