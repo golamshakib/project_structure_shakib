@@ -1,12 +1,84 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../common/widgets/custom_text.dart';
+import '../constants/app_sizes.dart';
+import '../constants/image_path.dart';
+
 class AppHelperFunctions{
  AppHelperFunctions._();
+
  static void showSnackBar(String message) {
-  ScaffoldMessenger.of(Get.context!).showSnackBar(
-   SnackBar(content: Text(message)),
+  Get.rawSnackbar(
+   snackPosition: SnackPosition.TOP,
+   margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+   borderRadius: 24,
+   backgroundColor: Colors.transparent,
+   duration: const Duration(seconds: 3),
+   animationDuration: const Duration(milliseconds: 600),
+   isDismissible: true,
+   snackStyle: SnackStyle.FLOATING,
+   overlayBlur:0,
+   barBlur: 3.0,
+   padding: EdgeInsets.zero,
+   messageText: ClipRRect(
+    borderRadius: BorderRadius.circular(24),
+    child: BackdropFilter(
+     filter: ColorFilter.mode(
+      Colors.black.withAlpha(20),
+      BlendMode.darken,
+     ),
+     child: Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+       color: Colors.white.withAlpha(10),
+       borderRadius: BorderRadius.circular(24),
+       border: Border.all(
+        color: Colors.white.withAlpha(20),
+        width: 0.5,
+       ),
+      ),
+      child: Row(
+       children: [
+        /// App Icon Container
+        Container(
+         height: getHeight(38),
+         width: getWidth(38),
+         decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+           BoxShadow(
+            color: Colors.black.withAlpha(20),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+           ),
+          ],
+         ),
+         padding: const EdgeInsets.all(6),
+         child: SvgPicture.asset(
+          ImagePath.appLogo,
+         ),
+        ),
+
+        const SizedBox(width: 12),
+
+        /// Message
+        Expanded(
+         child: CustomText(
+          text: message,
+          fontSize: getWidth(16),
+          fontWeight: FontWeight.w700,
+          textColor: Colors.white,
+         ),
+        ),
+       ],
+      ),
+     ),
+    ),
+   ),
   );
  }
 
