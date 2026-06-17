@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'local_notification_service.dart';
+
 
 class FirebaseMessagingService {
   // Private constructor for singleton pattern
@@ -27,6 +29,13 @@ class FirebaseMessagingService {
 
     // Request user permission for notifications
     _requestPermission();
+
+    // Enable native iOS foreground notification presentation options
+    await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
 
     // Register handler for background messages (app terminated)
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
@@ -79,6 +88,13 @@ class FirebaseMessagingService {
   /// Handles messages received while the app is in the foreground
   void _onForegroundMessage(RemoteMessage message) {
     print('Foreground message received: ${message.data.toString()}');
+
+    // On iOS, the native APNs/Firebase system handles foreground presentation natively.
+    // We return early to avoid showing a duplicate manual local notification.
+    if (Platform.isIOS) {
+      return;
+    }
+
     final notificationData = message.notification;
     if (notificationData != null) {
       // Display a local notification using the service
