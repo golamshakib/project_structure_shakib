@@ -1,0 +1,53 @@
+name: Mirror to Secondary GitHub Repository
+
+on:
+  push:
+    branches:
+      - '**'
+    tags:
+      - '**'
+  delete:
+    branches:
+      - '**'
+  workflow_dispatch: # Allows manual trigger from Actions tab if needed
+
+jobs:
+  mirror_repository:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history and tags
+          persist-credentials: false # IMPORTANT: Prevents overriding with main repo's GITHUB_TOKEN
+
+      - name: Push and Mirror to Secondary Repo
+        env:
+          SECONDARY_TOKEN: ${{ secrets.SECONDARY_GITHUB_TOKEN }}
+          TARGET_REPOSITORY: "" # SMTech24-official/Aseel-Fara-Verdict-Debate
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+          
+          if [ -z "$SECONDARY_TOKEN" ]; then
+            echo "::error::Missing mirror token. Set SECONDARY_GITHUB_TOKEN in your repository secrets."
+            exit 1
+          fi
+
+          # Track all remote branches so they are available locally
+          for branch in $(git for-each-ref --format='%(refname:strip=3)' refs/remotes/origin/); do
+            [ "$branch" = "HEAD" ] && continue
+            git branch --track "$branch" "origin/$branch" 2>/dev/null || true
+          done
+
+          # Set target repository URL with authentication
+          TARGET_URL="https://oauth2:${SECONDARY_TOKEN}@github.com/${TARGET_REPOSITORY}.git"
+          git remote add target "$TARGET_URL"
+          
+          # Force push all branches and prune deleted ones
+          echo "Pushing all branches to secondary repository..."
+          git push target --prune --force --all
+          
+          # Push all tags
+          echo "Pushing tags to secondary repository..."
+          git push target --force --tags
