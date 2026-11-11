@@ -3,12 +3,7 @@
 #on:
 #  push:
 #    branches:
-#      - '**'
-#    tags:
-#      - '**'
-#  delete:
-#    branches:
-#      - '**'
+#      - main
 #  workflow_dispatch: # Allows manual trigger from Actions tab if needed
 #
 #jobs:
@@ -24,7 +19,7 @@
 #      - name: Push and Mirror to Secondary Repo
 #        env:
 #          SECONDARY_TOKEN: ${{ secrets.SECONDARY_GITHUB_TOKEN }}
-#          TARGET_REPOSITORY: "" # SMTech24-official/Aseel-Fara-Verdict-Debate
+#          TARGET_REPOSITORY: "" #SMTech24-official/Masiana-Geter-PCS-Guide-AI-App
 #        run: |
 #          git config --global user.name "GitHub Actions Bot"
 #          git config --global user.email "actions@github.com"
@@ -34,20 +29,21 @@
 #            exit 1
 #          fi
 #
-#          # Track all remote branches so they are available locally
-#          for branch in $(git for-each-ref --format='%(refname:strip=3)' refs/remotes/origin/); do
-#            [ "$branch" = "HEAD" ] && continue
-#            git branch --track "$branch" "origin/$branch" 2>/dev/null || true
-#          done
+#          if [ -z "$TARGET_REPOSITORY" ]; then
+#            echo "::error::Missing target repository. Set TARGET_REPOSITORY in mirror.yml or repository secrets."
+#            exit 1
+#          fi
 #
 #          # Set target repository URL with authentication
-#          TARGET_URL="https://oauth2:${SECONDARY_TOKEN}@github.com/${TARGET_REPOSITORY}.git"
+#          TARGET_URL="https://x-access-token:${SECONDARY_TOKEN}@github.com/${TARGET_REPOSITORY}.git"
 #          git remote add target "$TARGET_URL"
 #
-#          # Force push all branches and prune deleted ones
-#          echo "Pushing all branches to secondary repository..."
-#          git push target --prune --force --all
+#          # Push main branch to secondary repository's main branch
+#          echo "Pushing main branch to secondary repository..."
+#          git push target HEAD:refs/heads/main --force
 #
-#          # Push all tags
-#          echo "Pushing tags to secondary repository..."
-#          git push target --force --tags
+#          # Push tags to secondary repository (if any exist)
+#          if [ $(git tag -l | wc -l) -gt 0 ]; then
+#            echo "Pushing tags to secondary repository..."
+#            git push target --force --tags
+#          fi
